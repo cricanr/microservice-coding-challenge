@@ -27,27 +27,34 @@ object QueryParametersHelper {
   def createQueryParams(request: IRequest): String = {
     request match {
       case infoRequest: IInfoRequest => createQueryParams(infoRequest)
-      case moviesSearchRequest: MoviesSearchRequest => createQueryParams(moviesSearchRequest)
+      case moviesSearchRequest: MoviesSearchRequest =>
+        createQueryParams(moviesSearchRequest)
     }
   }
 
-  private def getStringParameter(query: Map[String, Seq[String]], paramName: String): Option[String] = {
+  private def getStringParameter(query: Map[String, Seq[String]],
+                                 paramName: String): Option[String] = {
     query.get(paramName).flatMap(_.headOption)
   }
 
-  private def getIntParameter(query: Map[String, Seq[String]], paramName: String): Option[Int] = {
+  private def getIntParameter(query: Map[String, Seq[String]],
+                              paramName: String): Option[Int] = {
     Try(query.get(paramName).flatMap(_.headOption).map(_.toInt)) match {
       case Success(param) => param
-      case Failure(_) => throw new InvalidQueryParamException(s"Invalid query param supplied: $paramName. It must be an int.")
+      case Failure(_) =>
+        throw new InvalidQueryParamException(
+          s"Invalid query param supplied: $paramName. It must be an int.")
     }
   }
 
   private def createQueryParams(infoRequest: IInfoRequest): String = {
     import infoRequest._
-    if (ids.isEmpty) "" else s"?ids=${ids.mkString(",")}&limit=$limit&offset=$offset"
+    if (ids.isEmpty) ""
+    else s"?ids=${ids.mkString(",")}&limit=$limit&offset=$offset"
   }
 
-  private def createQueryParams(moviesSearchParameters: MoviesSearchRequest): String = {
+  private def createQueryParams(
+      moviesSearchParameters: MoviesSearchRequest): String = {
     import moviesSearchParameters._
     s"?genre=$genre&revenue=$revenue&limit=$limit&offset=$offset"
   }

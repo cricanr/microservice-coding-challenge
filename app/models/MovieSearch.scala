@@ -1,6 +1,10 @@
 package models
 
-case class MoviesSearchRequest(genre: String, revenue: Int, offset: Int, limit: Int) extends IRequest {
+case class MoviesSearchRequest(genre: String,
+                               revenue: Int,
+                               offset: Int,
+                               limit: Int)
+    extends IRequest {
   require(revenue >= 500000000)
 }
 

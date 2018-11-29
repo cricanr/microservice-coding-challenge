@@ -14,19 +14,23 @@ import scala.language.postfixOps
 
 @Singleton
 class MoviesController @Inject()(
-                                  cc: ControllerComponents,
-                                  ws: WSClient,
-                                  system: ActorSystem,
-                                  retryHandler: RetryHandler,
-                                  ratingService: RatingService,
-                                  aggregator: Aggregator
-                                )(implicit ec: ExecutionContext,
-                                  mat: Materializer)
-  extends AbstractController(cc) {
+    cc: ControllerComponents,
+    ws: WSClient,
+    system: ActorSystem,
+    retryHandler: RetryHandler,
+    ratingService: RatingService,
+    aggregator: Aggregator
+)(implicit ec: ExecutionContext, mat: Materializer)
+    extends AbstractController(cc) {
 
   def movies: Action[AnyContent] = Action.async { implicit request =>
     val maybeMoviesSearchParameters = QueryParametersHelper(request.queryString)
-    maybeMoviesSearchParameters.map(moviesSearchParams => aggregator.aggregate(moviesSearchParams).map(aggregatedResult => Ok(aggregatedResult)))
+    maybeMoviesSearchParameters
+      .map(
+        moviesSearchParams =>
+          aggregator
+            .aggregate(moviesSearchParams)
+            .map(aggregatedResult => Ok(aggregatedResult)))
       .getOrElse(Future.successful(Ok("Invalid search parameters supplied.")))
   }
 }

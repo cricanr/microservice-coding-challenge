@@ -11,9 +11,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 class MovieInfoService @Inject()(retryHandler: RetryHandler,
-                                 requestHandler: IRequestHandler)
-                                (implicit ec: ExecutionContext,
-                                 wSClient: WSClient) {
+                                 requestHandler: IRequestHandler)(
+    implicit ec: ExecutionContext,
+    wSClient: WSClient) {
   import requestHandler._
   import MovieInfoService._
 
@@ -21,7 +21,8 @@ class MovieInfoService @Inject()(retryHandler: RetryHandler,
   private val method = "/movies"
 
   def moviesInfo(moviesInfoRequest: MoviesInfoRequest): Future[MoviesInfo] = {
-    implicit val retryConfig: RetryConfig = RetryConfig(noTries = 2, factor = 1.3f, 1, 0)
+    implicit val retryConfig: RetryConfig =
+      RetryConfig(noTries = 2, factor = 1.3f, 1, 0)
 
     import query.QueryParametersHelper._
     val queryParams = createQueryParams(moviesInfoRequest)
@@ -38,5 +39,6 @@ class MovieInfoService @Inject()(retryHandler: RetryHandler,
 }
 
 object MovieInfoService {
-  implicit def decoder(body: String): Either[circe.Error, MoviesInfo] = decode[MoviesInfo](body)
+  implicit def decoder(body: String): Either[circe.Error, MoviesInfo] =
+    decode[MoviesInfo](body)
 }
