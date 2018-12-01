@@ -16,4 +16,5 @@ case class MovieInfo(id: Int,
                      originalLanguage: String,
                      genres: Seq[Int],
                      cast: Seq[Int])
+
 case class MoviesInfo(metadata: Metadata, data: Seq[MovieInfo])

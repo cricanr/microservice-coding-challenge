@@ -14,8 +14,9 @@ class MovieInfoService @Inject()(retryHandler: RetryHandler,
                                  requestHandler: IRequestHandler)(
     implicit ec: ExecutionContext,
     wSClient: WSClient) {
-  import requestHandler._
+
   import MovieInfoService._
+  import requestHandler._
 
   private val baseUri = "http://localhost:3030"
   private val method = "/movies"

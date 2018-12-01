@@ -34,6 +34,7 @@ class Composer {
                  artistInfo.profilePath)
         }
       }
+
       MovieDetail(
         movieInfoResult.id,
         movieInfoResult.title,

@@ -9,4 +9,5 @@ case class MoviesSearchRequest(genre: String,
 }
 
 case class MovieSearch(metadata: Metadata, data: Seq[Int])
+
 case class Genre(id: Int, name: String)

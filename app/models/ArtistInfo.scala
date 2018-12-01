@@ -8,4 +8,5 @@ case class ArtistInfo(name: String,
                       profilePath: String,
                       movies: Seq[Int],
                       id: Int)
+
 case class ArtistInfos(metadata: Metadata, data: Seq[ArtistInfo])
