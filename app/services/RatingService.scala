@@ -17,8 +17,11 @@ import scala.concurrent.duration._
 import scala.io.Source
 import scala.util.Try
 
+trait IRatingService
+
 class RatingService @Inject()(ws: WSClient)(implicit ec: ExecutionContext,
-                                            mat: Materializer) {
+                                            mat: Materializer)
+    extends IRatingService {
   private lazy val ratingLinesUnfiltered = ratingLines
   private val ratingAvgList = ratingsAverage(ratingLinesUnfiltered)
 

@@ -13,12 +13,15 @@ import scala.concurrent.{ExecutionContext, Future}
 class AggregatorSuccessMock @Inject()(movieSearchService: MovieSearchService,
                                       movieInfoService: MovieInfoService,
                                       artistInfoService: ArtistInfoService,
-                                      ratingService: RatingService)
-                                     (implicit ec: ExecutionContext,
-                                      mat: Materializer,
-                                      system: ActorSystem,
-                                      wsClient: WSClient) extends
-  Aggregator(movieSearchService, movieInfoService, artistInfoService, ratingService)(ec, mat, system, wsClient) {
+                                      ratingService: RatingService)(
+    implicit ec: ExecutionContext,
+    mat: Materializer,
+    system: ActorSystem,
+    wsClient: WSClient)
+    extends Aggregator(movieSearchService,
+                       movieInfoService,
+                       artistInfoService,
+                       ratingService)(ec, mat, system, wsClient) {
   override def aggregate(request: MoviesSearchRequest): Future[String] = {
     Future.successful(AggregatorSuccessMock.successfulResponse)
   }
@@ -27,12 +30,15 @@ class AggregatorSuccessMock @Inject()(movieSearchService: MovieSearchService,
 class AggregatorFailedMock @Inject()(movieSearchService: MovieSearchService,
                                      movieInfoService: MovieInfoService,
                                      artistInfoService: ArtistInfoService,
-                                     ratingService: RatingService)
-                                    (implicit ec: ExecutionContext,
-                                     mat: Materializer,
-                                     system: ActorSystem,
-                                     wsClient: WSClient) extends
-  Aggregator(movieSearchService, movieInfoService, artistInfoService, ratingService)(ec, mat, system, wsClient) {
+                                     ratingService: RatingService)(
+    implicit ec: ExecutionContext,
+    mat: Materializer,
+    system: ActorSystem,
+    wsClient: WSClient)
+    extends Aggregator(movieSearchService,
+                       movieInfoService,
+                       artistInfoService,
+                       ratingService)(ec, mat, system, wsClient) {
   override def aggregate(request: MoviesSearchRequest): Future[String] = {
     Future.failed(new Exception("Invalid search parameters supplied."))
   }
