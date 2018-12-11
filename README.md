@@ -159,9 +159,23 @@ sbt run
 
 You can also run and debug using IntelliJ if you want.
 
+Scalafmt:
+--------
+In order to have well formatted, consistent, easy to maintain code approved by Scala community standards I use Scalafmt.
+It is configurable to work within IntelliJ or other IDEs, integrated with your favourite shortcuts and also at build time
+when a file is saved code will be reformatted accordingly.
+Installation documentation:https://github.com/lucidsoftware/neo-sbt-scalafmt
+Useful `sbt` commands to run Scalafmt tasks:
+```sbtshell
+> scalafmt       # format compile sources
+> test:scalafmt  # format test sources
+> sbt:scalafmt   # format .sbt source
+``` 
+
 Useful link: 
 --------------
 1. Play framework: https://www.playframework.com/documentation/2.6.x/Home
 2. Circe: https://circe.github.io/circe/ 
 3. Akka-Streams from Play: https://www.playframework.com/documentation/2.6.x/ScalaWS#directly-creating-wsclient 
 4. Exponential back-off strategy with Scala Futures: https://hackernoon.com/exponential-back-off-with-scala-futures-7426340d0069
+5. Scalafmt: https://scalameta.org/scalafmt/

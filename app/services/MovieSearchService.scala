@@ -13,20 +13,22 @@ import scala.language.postfixOps
 trait IMovieSearchService {
   def getAllGenres(implicit ec: ExecutionContext): Future[Seq[Genre]]
 
-  def searchMovies(moviesSearchParameters: MoviesSearchRequest)(implicit ec: ExecutionContext): Future[MovieSearch]
+  def searchMovies(moviesSearchParameters: MoviesSearchRequest)(
+      implicit ec: ExecutionContext): Future[MovieSearch]
 }
 
-class MovieSearchService @Inject()(requestHandler: IRequestHandler)
-                                  (implicit ec: ExecutionContext,
-                                   wSClient: WSClient)
-  extends IMovieSearchService {
+class MovieSearchService @Inject()(requestHandler: IRequestHandler)(
+    implicit ec: ExecutionContext,
+    wSClient: WSClient)
+    extends IMovieSearchService {
 
   import MovieSearchService._
   import requestHandler._
 
   val baseUri = "http://localhost:3040"
 
-  override def searchMovies(moviesSearchRequest: MoviesSearchRequest)(implicit ec: ExecutionContext): Future[MovieSearch] = {
+  override def searchMovies(moviesSearchRequest: MoviesSearchRequest)(
+      implicit ec: ExecutionContext): Future[MovieSearch] = {
     import query.QueryParametersHelper._
 
     val method = "/movies"
@@ -35,7 +37,8 @@ class MovieSearchService @Inject()(requestHandler: IRequestHandler)
     callEndpointWithRetry[MovieSearch](urlSearchMovies)
   }
 
-  override def getAllGenres(implicit ec: ExecutionContext): Future[Seq[Genre]] = {
+  override def getAllGenres(
+      implicit ec: ExecutionContext): Future[Seq[Genre]] = {
     val method = "/genres"
     val urlGetAllGenres = s"$baseUri$method"
     callEndpointWithRetry[Seq[Genre]](urlGetAllGenres)
@@ -43,7 +46,8 @@ class MovieSearchService @Inject()(requestHandler: IRequestHandler)
 }
 
 object MovieSearchService {
-  implicit def decodeMovieSearch(body: String): Either[circe.Error, MovieSearch] = {
+  implicit def decodeMovieSearch(
+      body: String): Either[circe.Error, MovieSearch] = {
     decode[MovieSearch](body)
   }
 
